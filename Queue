@@ -1,0 +1,84 @@
+#include <iostream>
+#include <cassert>
+using namespace std;
+class qu{
+    int front;
+    int rear;
+    int length;
+    int *arr;
+    int max;
+public:
+  qu(int size){
+      if(size<=0)
+      max=100;
+      else
+      max=size;
+      front=0;
+      rear=max-1;
+      arr=new int[max];
+      length=0;
+  }
+  int isempty(){
+      return length==0;
+  }
+  int isfull(){
+      return length==max;
+  }
+  void add(int e){
+      if(isfull())
+      cout<<"full";
+      else{
+          rear=(rear+1)%max;
+          arr[rear]=e;
+          length++;
+      }
+  }
+  void del(){
+      if(isempty())
+      cout<<"full";
+      else{
+          front=(front+1)%max;
+          length--;
+      }
+  }
+  int frontqu(){
+      assert(isempty());
+      return arr[front];
+  }
+  int rearqu(){
+      assert(isempty());
+      return arr[rear];
+  }
+  void print(){
+      if(!isempty()){
+          for(int i=front;i!=rear;i=(i+1)%max)
+          cout<<arr[i]<<"  ";
+          cout << arr[rear];
+      }
+      
+      else
+      cout<<"empty";
+  }
+  int search(int e){
+      int pos=-1;
+      if(!isempty()){
+          for(int i=front;i!=rear+1;i=(i+1)%max){
+              if(arr[i]==e)
+              pos=i;
+              break;
+          }
+      }else
+      cout<<"empty";
+      return pos;
+  }
+};
+int main() {
+    qu q1(5);
+	q1.add(10);
+	q1.add(20);
+	q1.add(30);
+	q1.add(40);
+	q1.add(50);
+	q1.print();
+    return 0;
+}
